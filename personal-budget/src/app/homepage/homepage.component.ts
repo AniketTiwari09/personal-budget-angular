@@ -139,7 +139,7 @@ export class HomepageComponent implements AfterViewInit{
 
 }*/
 
-import { Component, AfterViewInit, ElementRef, NgZone } from '@angular/core';
+/*import { Component, AfterViewInit, ElementRef, NgZone } from '@angular/core';
 import { Chart } from 'chart.js';
 import * as d3 from 'd3'; // Import D3 library
 
@@ -213,6 +213,7 @@ export class HomepageComponent implements AfterViewInit {
     this.createD3Chart(data); // Call the function to create the D3 chart
   }
 
+
   createChart() {
     const ctx = document.getElementById('myChart') as HTMLCanvasElement;
     const myPieChart = new Chart(ctx, {
@@ -246,6 +247,301 @@ export class HomepageComponent implements AfterViewInit {
       .attr('width', barWidth - barPadding)
       .attr('transform', (d, i) => `translate(${i * barWidth}, 0)`);
   }
+}*/
+
+
+
+/*import { Component, AfterViewInit, ElementRef, NgZone } from '@angular/core';
+import { Chart } from 'chart.js';
+import * as d3 from 'd3'; // Import D3 library
+
+@Component({
+  selector: 'pb-homepage',
+  templateUrl: './homepage.component.html',
+  styleUrls: ['./homepage.component.scss'],
+})
+export class HomepageComponent implements AfterViewInit {
+  public pieChartDataSource: any = {
+    datasets: [
+      {
+        data: [
+          {
+            title: 'Eat out',
+            budget: 50,
+          },
+          {
+            title: 'Rent',
+            budget: 200,
+          },
+          {
+            title: 'Grocery',
+            budget: 90,
+          },
+          {
+            title: 'Dog',
+            budget: 50,
+          },
+          {
+            title: 'Entertainment',
+            budget: 200,
+          },
+          {
+            title: 'Office',
+            budget: 50,
+          },
+          {
+            title: 'Motorcycle',
+            budget: 400,
+          },
+        ],
+        backgroundColor: [
+          '#ffcd56',
+          '#ff6384',
+          '#36a2eb',
+          '#fd6b19',
+          '#cc65fe',
+          '#fcba03',
+          '#fd6b19',
+        ],
+      },
+    ],
+    labels: [],
+  };
+
+  constructor(private el: ElementRef, private ngZone: NgZone) {}
+
+  ngAfterViewInit(): void {
+    const pieChartData = [
+      {
+        title: 'Eat out',
+        budget: 50,
+      },
+      {
+        title: 'Rent',
+        budget: 200,
+      },
+      {
+        title: 'Grocery',
+        budget: 90,
+      },
+      {
+        title: 'Dog',
+        budget: 50,
+      },
+      {
+        title: 'Entertainment',
+        budget: 200,
+      },
+      {
+        title: 'Office',
+        budget: 50,
+      },
+      {
+        title: 'Motorcycle',
+        budget: 400,
+      }
+      // Add more data points as needed
+    ];
+
+    for (let i = 0; i < pieChartData.length; i++) {
+      this.pieChartDataSource.datasets[0].data[i] = pieChartData[i].budget;
+      this.pieChartDataSource.labels[i] = pieChartData[i].title;
+    }
+
+    this.createPieChart();
+    this.createD3DonutChart(pieChartData); // Call the function to create the D3 donut chart
+  }
+
+  createPieChart() {
+    const pieChartCanvas = document.getElementById('pieChart') as HTMLCanvasElement;
+    const pieChartContext = pieChartCanvas.getContext('2d') as CanvasRenderingContext2D;
+    const pieChart = new Chart(pieChartContext, {
+      type: 'pie',
+      data: this.pieChartDataSource,
+    });
+  }
+
+  createD3DonutChart(data: any[]) {
+    // Define a color scale to map colors to titles
+    const color = d3.scaleOrdinal<string>()
+      .domain(data.map((d) => d.title))
+      .range(['#ffcd56', '#ff6384', '#36a2eb', '#fd6b19', '#cc65fe', '#fcba03', '#fd6b19']);
+
+    // Create a D3 donut chart using the provided data
+    const svgWidth = 300;
+    const svgHeight = 200;
+    const radius = Math.min(svgWidth, svgHeight) / 2;
+
+    const svg = d3.select('#donutChart')
+      .append('svg')
+      .attr('width', svgWidth)
+      .attr('height', svgHeight)
+      .append('g')
+      .attr('transform', `translate(${svgWidth / 2},${svgHeight / 2})`);
+
+    const pie = d3.pie<any>().value((d) => d.budget);
+
+    const path = d3.arc<any>().outerRadius(radius - 10).innerRadius(radius - 70);
+
+    const arc = svg.selectAll('.arc')
+      .data(pie(data))
+      .enter()
+      .append('g')
+      .attr('class', 'arc');
+
+    arc.append('path')
+      .attr('d', (d) => path(d) as string)
+      .attr('fill', (d: any) => color(d.data.title));
+
+    // Add labels or legends if needed
+    // ...
+  }
 }
+*/
 
+import { Component, AfterViewInit, ElementRef, NgZone } from '@angular/core';
+import { Chart } from 'chart.js';
+import * as d3 from 'd3'; // Import D3 library
 
+@Component({
+  selector: 'pb-homepage',
+  templateUrl: './homepage.component.html',
+  styleUrls: ['./homepage.component.scss'],
+})
+export class HomepageComponent implements AfterViewInit {
+  public pieChartDataSource: any = {
+    datasets: [
+      {
+        data: [
+          {
+            title: 'Eat out',
+            budget: 50,
+          },
+          {
+            title: 'Rent',
+            budget: 200,
+          },
+          {
+            title: 'Grocery',
+            budget: 90,
+          },
+          {
+            title: 'Dog',
+            budget: 50,
+          },
+          {
+            title: 'Entertainment',
+            budget: 200,
+          },
+          {
+            title: 'Office',
+            budget: 50,
+          },
+          {
+            title: 'Motorcycle',
+            budget: 400,
+          },
+        ],
+        backgroundColor: [
+          '#ffcd56',
+          '#ff6384',
+          '#36a2eb',
+          '#fd6b19',
+          '#cc65fe',
+          '#fcba03',
+          '#fd6b19',
+        ],
+      },
+    ],
+    labels: [],
+  };
+
+  constructor(private el: ElementRef, private ngZone: NgZone) {}
+
+  ngAfterViewInit(): void {
+    const pieChartData = [
+      {
+        title: 'Eat out',
+        budget: 50,
+      },
+      {
+        title: 'Rent',
+        budget: 200,
+      },
+      {
+        title: 'Grocery',
+        budget: 90,
+      },
+      {
+        title: 'Dog',
+        budget: 50,
+      },
+      {
+        title: 'Entertainment',
+        budget: 200,
+      },
+      {
+        title: 'Office',
+        budget: 50,
+      },
+      {
+        title: 'Motorcycle',
+        budget: 400,
+      }
+      // Add more data points as needed
+    ];
+
+    for (let i = 0; i < pieChartData.length; i++) {
+      this.pieChartDataSource.datasets[0].data[i] = pieChartData[i].budget;
+      this.pieChartDataSource.labels[i] = pieChartData[i].title;
+    }
+
+    this.createPieChart();
+    this.createD3DonutChart(pieChartData); // Call the function to create the D3 donut chart
+  }
+
+  createPieChart() {
+    const pieChartCanvas = document.getElementById('pieChart') as HTMLCanvasElement;
+    const pieChartContext = pieChartCanvas.getContext('2d') as CanvasRenderingContext2D;
+    const pieChart = new Chart(pieChartContext, {
+      type: 'pie',
+      data: this.pieChartDataSource,
+    });
+  }
+
+  createD3DonutChart(data: any[]) {
+    // Define a color scale to map colors to titles
+    const color = d3.scaleOrdinal<string>()
+      .domain(data.map((d) => d.title))
+      .range(['#ffcd56', '#ff6384', '#36a2eb', '#fd6b19', '#cc65fe', '#fcba03', '#fd6b19']);
+
+    // Create a D3 donut chart using the provided data
+    const svgWidth = 200;
+    const svgHeight = 200;
+    const radius = Math.min(svgWidth, svgHeight) / 2;
+
+    const svg = d3.select('#donutChart')
+      .append('svg')
+      .attr('width', svgWidth)
+      .attr('height', svgHeight)
+      .append('g')
+      .attr('transform', `translate(${svgWidth / 2},${svgHeight / 2})`);
+
+    const pie = d3.pie<any>().value((d) => d.budget);
+
+    const path = d3.arc<any>().outerRadius(radius - 10).innerRadius(radius - 70);
+
+    const arc = svg.selectAll('.arc')
+      .data(pie(data))
+      .enter()
+      .append('g')
+      .attr('class', 'arc');
+
+    arc.append('path')
+      .attr('d', (d) => path(d) as string)
+      .attr('fill', (d: any) => color(d.data.title));
+
+    // Add labels or legends if needed
+    // ...
+  }
+}
